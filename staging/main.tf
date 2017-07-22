@@ -31,23 +31,3 @@ module "vpc" {
     Component = "staging"
   }
 }
-
-module "consul" {
-  source = "github.com/pablerass/tf_aws_consul"
-
-  server_count  = 3
-
-  key_pair      = "main"
-  subnet_id     = "${element(module.vpc.private_subnet_ids, 1)}"
-  ami           = "${data.aws_ami.ubuntu.id}"
-  instance_type = "t2.nano"
-
-  tags = {
-    Component   = "staging"
-  }
-
-  tags_instances = {
-    AnsibleUser = "ubuntu"
-    AnsiblePythonInterpreter = "/usr/bin/python3"
-  }
-}
